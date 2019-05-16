@@ -1,7 +1,8 @@
 import numpy as np
 from collections import defaultdict
+from ai.algorithms.base import BaseAlgorithm
 
-class MonteCarloPrediction():
+class MonteCarloPrediction(BaseAlgorithm):
     def __init__(self, env, action=True, first_visit=True):
         """Monte Carlo Prediction initialization
 

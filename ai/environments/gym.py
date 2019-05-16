@@ -2,8 +2,7 @@ import gym
 import time
 from math import floor, log
 
-
-class GenericGymEnv():
+class GymEnv(object):
     def __init__(self, env_name):
         self.env = gym.make(env_name)
         self.report_interval = 0
@@ -64,93 +63,95 @@ class GenericGymEnv():
     def _visualize_action_value(self, value_function):
         print('Action-value function visualization is not implemented for this environment.')
 
+
+
 # Simple
-class Blackjack(GenericGymEnv):
+class Blackjack(GymEnv):
     def __init__(self):
         super().__init__('Blackjack-v0')
 
     def _visualize_state_value(self, value_function):
         pass
 
-class FrozenLake(GenericGymEnv):
+class FrozenLake(GymEnv):
     def __init__(self):
         super().__init__('FrozenLake-v0')
 
-class FrozenLakeLarge(GenericGymEnv):
+class FrozenLakeLarge(GymEnv):
     def __init__(self):
         super().__init__('FrozenLake8x8-v0')
 
-class Taxi(GenericGymEnv):
+class Taxi(GymEnv):
     def __init__(self):
         super().__init__('Taxi-v2')
 
 # Classic control
-class Acrobot(GenericGymEnv):
+class Acrobot(GymEnv):
     def __init__(self):
         super().__init__('Acrobot-v1')
 
-class CartPole(GenericGymEnv):
+class CartPole(GymEnv):
     def __init__(self):
         super().__init__('CartPole-v1')
 
-class MountainCar(GenericGymEnv):
+class MountainCar(GymEnv):
     def __init__(self):
         super().__init__('MountainCar-v0')
 
-class MountainCarContinuous(GenericGymEnv):
+class MountainCarContinuous(GymEnv):
     def __init__(self):
         super().__init__('MountainCarContinuous-v0')
 
-class Pendulum(GenericGymEnv):
+class Pendulum(GymEnv):
     def __init__(self):
         super().__init__('Pendulum-v0')
 
 # Box2d
-class BipedalWalker(GenericGymEnv):
+class BipedalWalker(GymEnv):
     def __init__(self):
         super().__init__('BipedalWalker-v2')
 
-class BipedalWalkerHardcore(GenericGymEnv):
+class BipedalWalkerHardcore(GymEnv):
     def __init__(self):
         super().__init__('BipedalWalkerHardcore-v2')
 
-class CarRacing(GenericGymEnv):
+class CarRacing(GymEnv):
     def __init__(self):
         super().__init__('CarRacing-v0')
 
-class LunarLander(GenericGymEnv):
+class LunarLander(GymEnv):
     def __init__(self):
         super().__init__('LunarLander-v2')
 
-class LunarLanderContinuous(GenericGymEnv):
+class LunarLanderContinuous(GymEnv):
     def __init__(self):
         super().__init__('LunarLanderContinuous-v2')
 
 # MuJoCo
-class Ant(GenericGymEnv):
+class Ant(GymEnv):
     def __init__(self):
         super().__init__('Ant-v2')
 
-class HalfCheetah(GenericGymEnv):
+class HalfCheetah(GymEnv):
     def __init__(self):
         super().__init__('HalfCheetah-v2')
 
-class Hopper(GenericGymEnv):
+class Hopper(GymEnv):
     def __init__(self):
         super().__init__('Hopper-v2')
 
-class Humanoid(GenericGymEnv):
+class Humanoid(GymEnv):
     def __init__(self):
         super().__init__('Humanoid-v2')
 
-class HumanoidStandup(GenericGymEnv):
+class HumanoidStandup(GymEnv):
     def __init__(self):
         super().__init__('HumanoidStandup-v2')
 
-class InvertedDoublePendulum(GenericGymEnv):
+class InvertedDoublePendulum(GymEnv):
     def __init__(self):
         super().__init__('InvertedDoublePendulum-v2')
 
-class Reacher(GenericGymEnv):
+class Reacher(GymEnv):
     def __init__(self):
         super().__init__('Reacher-v2')
