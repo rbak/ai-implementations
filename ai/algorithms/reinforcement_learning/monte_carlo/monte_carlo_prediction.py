@@ -15,9 +15,9 @@ class MonteCarloPrediction(BaseAlgorithm):
 
         Keyword Arguments:
             action {bool} -- If true, search for the action value function.
-                             If false, search for the state value function (default: True)
+                If false, search for the state value function (default: True)
             first_visit {bool} -- If true, only evaluate the first visit to a state.
-                                  If false, average all visits to a state. (default: True)
+                If false, average all visits to a state. (default: True)
         """
         self.env = env
         self.action = action
