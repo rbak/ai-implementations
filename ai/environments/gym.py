@@ -1,5 +1,7 @@
 import gym
 import time
+import numpy as np
+from collections import deque
 from math import floor, log
 
 class GymEnv(object):
@@ -26,7 +28,10 @@ class GymEnv(object):
         return self.env.reset()
 
     def step(self, action):
-        return self.env.step(action)
+        step = self.env.step(action)
+        next_state, reward, done, info = step
+        self.last_reward = reward
+        return step
 
     def visualize_value(self, value_function):
         self._cleanup()
@@ -49,8 +54,12 @@ class GymEnv(object):
             exp = log(self.episode, 10)
             exp = floor(exp)
             self.report_interval = 10**exp
-        if self.report_interval != 0 and (self.episode % self.report_interval) == 0:
-            print("\rEpisode: {}".format(self.episode), end="")
+            self.rewards_summary = deque(maxlen=self.report_interval*100)
+        if self.report_interval != 0:
+            self.rewards_summary.append(self.last_reward)
+            if (self.episode % self.report_interval) == 0:
+                print("\rEpisode: {}  Average Reward: {:.3}".format(
+                    self.episode, np.mean(self.rewards_summary)), end="")
 
     def _cleanup(self):
         if not self.shell_cleanup:
