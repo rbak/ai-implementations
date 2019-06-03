@@ -1,13 +1,13 @@
 import ai.algorithms as algorithms
-import ai.environments as envs
+import ai.environments as environments
 
 import cmd
+import readline
 import sys
 
 class AIShell(cmd.Cmd):
     intro = 'Type help or ? to list commands.\n'
     prompt = '(ai) '
-    file = None
 
     def do_run(self, arg):
         """Run an algorithm: RUN MonteCarloPrediction Blackjack
@@ -23,10 +23,10 @@ class AIShell(cmd.Cmd):
             else:
                 algorithm = getattr(algorithms, args[0])
         if len(args) >= 2:
-            if not hasattr(envs, args[1]):
+            if not hasattr(environments, args[1]):
                 print('ERROR: The environment %s is not supported'.format(args[1]))
             else:
-                environment = getattr(envs, args[1])
+                environment = getattr(environments, args[1])
 
         self.run(algorithm, environment)
 
@@ -37,23 +37,53 @@ class AIShell(cmd.Cmd):
 
     def do_list_environments(self, arg):
         'List all available environments'
-        for module in envs.__all__:
+        for module in environments.__all__:
             print(module)
 
-    def do_describe_algorithms(self, arg):
-        'List all available algorithms:  RIGHT 20'
-        pass
+    def do_describe_algorithm(self, arg):
+        """Print details for a given algorithm.
 
-    def do_describe_environments(self, arg):
-        'Turn all available environments:  RIGHT 20'
-        # right(*parse(arg))
-        pass
+        Usage: describe_algorithm <algorithm name>
+        """
+        args = arg.split()
+        if len(args) != 1:
+            self.print_usage_error(self.do_describe_algorithm)
+            return
+        if not hasattr(algorithms, args[0]):
+            print('ERROR: The algorithm %s is not supported'.format(args[0]))
+            return
+        algorithm = getattr(algorithms, args[0])
+        print(algorithm.__doc__)
+
+    def do_describe_environment(self, arg):
+        """Print details for a given environment.
+
+        Usage: describe_environment <environment name>
+        """
+        args = arg.split()
+        if len(args) != 1:
+            self.print_usage_error(self.do_describe_environment)
+            return
+        if not hasattr(environments, args[0]):
+            print('ERROR: The environment %s is not supported'.format(args[0]))
+            return
+        environment = getattr(environments, args[0])
+        print(environment.__doc__)
 
     def do_exit(self, arg):
         'Exit the shell'
         return True
 
 # ------------------------------
+
+    def print_usage_error(self, method):
+        print('Error running {}'.format(method.__name__[3:]))
+        usage = method.__doc__
+        for line in method.__doc__.split('\n'):
+            if 'Usage:' in line:
+                usage = line.strip()
+        print(usage)
+
 
     def run(self, alg_type, env_type):
         with env_type() as env:

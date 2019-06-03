@@ -3,6 +3,7 @@ import time
 import numpy as np
 from collections import deque
 from math import floor, log
+# import matplotlib.pyplot as plt
 
 class GymEnv(object):
     def __init__(self, env_name):
@@ -11,6 +12,8 @@ class GymEnv(object):
         self.episode = 0
         self.shell_cleanup = False
         self.rewards = []
+
+        # self.fig = plt.figure()
 
     def __enter__(self):
         return self
@@ -33,13 +36,17 @@ class GymEnv(object):
         self.last_reward = reward
         return step
 
-    def visualize_value(self, value_function):
+    # def visualize_value(self, value_function):
+    #     self._cleanup()
+    #     k, v = next(iter(value_function.items()))
+    #     if type(k) == tuple:
+    #         self._visualize_action_value(value_function)
+    #     else:
+    #         self._visualize_state_value(value_function)
+
+    def visualize(self):
         self._cleanup()
-        k, v = next(iter(value_function.items()))
-        if type(k) == tuple:
-            self._visualize_action_value(value_function)
-        else:
-            self._visualize_state_value(value_function)
+        # Do visualization
 
     def _report(self):
         """Prints out basic run info.
