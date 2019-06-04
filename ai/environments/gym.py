@@ -3,7 +3,8 @@ import time
 import numpy as np
 from collections import deque
 from math import floor, log
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+import sys
 
 class GymEnv(object):
     def __init__(self, env_name):
@@ -12,8 +13,6 @@ class GymEnv(object):
         self.episode = 0
         self.shell_cleanup = False
         self.rewards = []
-
-        # self.fig = plt.figure()
 
     def __enter__(self):
         return self
@@ -48,6 +47,23 @@ class GymEnv(object):
         self._cleanup()
         # Do visualization
 
+    def _start_graph(self, x=(0,50000), y=(-1,1)):
+        plt.close()
+        plt.ion()
+        fig=plt.figure()
+        ax = fig.add_subplot(111, xlim=x, ylim=y, xlabel="test", ylabel="test2")
+        # self.detail_data = []
+        self.summary_data = []
+        # self.detail_line, = ax.plot([], [], 'r-')
+        self.summary_line, = ax.plot([], [], 'b-')
+
+    def _update_graph(self):
+        # self.detail_line.set_data(np.arange(1, len(self.detail_data)+1), self.detail_data)
+        self.summary_line.set_data(
+            np.arange(1, len(self.summary_data)+1)*self.report_interval, self.summary_data)
+        plt.show()
+        plt.pause(0.0001)
+
     def _report(self):
         """Prints out basic run info.
 
@@ -62,9 +78,13 @@ class GymEnv(object):
             exp = floor(exp)
             self.report_interval = 10**exp
             self.rewards_summary = deque(maxlen=self.report_interval*100)
+            self._start_graph()
         if self.report_interval != 0:
+            # self.detail_data.append(self.last_reward)
             self.rewards_summary.append(self.last_reward)
             if (self.episode % self.report_interval) == 0:
+                self.summary_data.append(np.mean(self.rewards_summary))
+                self._update_graph()
                 print("\rEpisode: {}  Average Reward: {:.3}".format(
                     self.episode, np.mean(self.rewards_summary)), end="")
 
