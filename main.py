@@ -4,6 +4,7 @@ import ai.environments as environments
 import cmd
 import readline
 import sys
+import matplotlib.pyplot as plt
 
 class AIShell(cmd.Cmd):
     intro = 'Type help or ? to list commands.\n'
@@ -70,6 +71,10 @@ class AIShell(cmd.Cmd):
         environment = getattr(environments, args[0])
         print(environment.__doc__)
 
+    def do_close_plots(self, arg):
+        'Close all plots'
+        plt.close()
+
     def do_exit(self, arg):
         'Exit the shell'
         return True
@@ -96,7 +101,12 @@ class AIShell(cmd.Cmd):
     def list_environments(self, filters):
         return []
 
-if __name__ == '__main__':
+def main():
     AIShell().cmdloop()
 
-
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        plt.close()
+        sys.exit(0)
