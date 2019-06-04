@@ -21,7 +21,7 @@ class BaseAlgorithm(object):
 		self._load_hyper_parameters(**kwargs)
 		self._print_run()
 
-	def finish_run(self):
+	def finish_run(self, **kwargs):
 		self.env.visualize()
 		print('='*LINE_LENGTH)
 
