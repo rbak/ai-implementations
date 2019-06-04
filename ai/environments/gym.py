@@ -22,6 +22,10 @@ class GymEnv(object):
         self.env.close()
 
     @property
+    def doc(self):
+        return self.env.__doc__
+
+    @property
     def action_space(self):
         return self.env.action_space.n
 

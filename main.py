@@ -69,7 +69,8 @@ class AIShell(cmd.Cmd):
             print('ERROR: The environment %s is not supported'.format(args[0]))
             return
         environment = getattr(environments, args[0])
-        print(environment.__doc__)
+        with environment() as env:
+            print(env.doc)
 
     def do_close_plots(self, arg):
         'Close all plots'
