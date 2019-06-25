@@ -2,7 +2,14 @@
 Implementations and descriptions of several ai algorithms written using PyTorch.  For each algorithm there is a complete working implementation, as well as a jupyter notebook that explains the algorithm in more depth.  More algorithms will be added overtime.
 
 Implemented algorithms:
-- coming soon
+
+| Name        | State       |
+| -----       | -----       |
+| Monte Carlo | In Progress |
+| SARSA       | In Progress |
+| DQN         | Planned     |
+| DDPG        | Planned     |
+| PPO         | Planned     |
 
 
 ## Usage
